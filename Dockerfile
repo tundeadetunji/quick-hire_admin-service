@@ -1,15 +1,12 @@
 FROM eclipse-temurin:17-jdk AS builder
 
 WORKDIR /app
-
 COPY . .
-
 RUN ./mvnw clean package -DskipTests
 
 FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
-
-COPY --from=builder /app/admin-service/target/admin-service-*.jar app.jar
+COPY --from=builder /app/target/admin-service-*.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
