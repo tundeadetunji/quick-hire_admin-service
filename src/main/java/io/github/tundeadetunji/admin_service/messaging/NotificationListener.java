@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class NotificationListener {
 
-    @RabbitListener(queues = "#{adminQueue.name}")
+    /*@RabbitListener(queues = "#{adminQueue.name}")
     public void receive(String notificationMessage) {
         //in production, send to admin/stakeholders' email
 
@@ -21,5 +21,5 @@ public class NotificationListener {
         } catch (Exception e) {
             log.error("Failed to parse notification message: {}", e.getMessage());
         }
-    }
+    }*/
 }

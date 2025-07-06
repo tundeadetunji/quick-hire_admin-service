@@ -6,14 +6,10 @@ spring:
     name: admin-service
 
   datasource:
-    url: jdbc:h2:mem:admin-db
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-
-  h2:
-    console:
-      enabled: true
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
@@ -21,17 +17,17 @@ spring:
     show-sql: true
 
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+    host: ${SPRING_RABBITMQ_HOST}
+    port: ${SPRING_RABBITMQ_PORT}
+    username: ${SPRING_RABBITMQ_USERNAME}
+    password: ${SPRING_RABBITMQ_PASSWORD}
 
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
 
 storage:
-  backend: h2
+  backend: postgres
 
 resilience4j:
   circuitbreaker:
@@ -68,10 +64,14 @@ management:
 #    name: admin-service
 #
 #  datasource:
-#    url: ${SPRING_DATASOURCE_URL}
-#    username: ${SPRING_DATASOURCE_USERNAME}
-#    password: ${SPRING_DATASOURCE_PASSWORD}
-#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:h2:mem:admin-db
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    password:
+#
+#  h2:
+#    console:
+#      enabled: true
 #
 #  jpa:
 #    hibernate:
@@ -79,17 +79,17 @@ management:
 #    show-sql: true
 #
 #  rabbitmq:
-#    host: ${SPRING_RABBITMQ_HOST}
-#    port: ${SPRING_RABBITMQ_PORT}
-#    username: ${SPRING_RABBITMQ_USERNAME}
-#    password: ${SPRING_RABBITMQ_PASSWORD}
+#    host: localhost
+#    port: 5672
+#    username: guest
+#    password: guest
 #
 #springdoc:
 #  swagger-ui:
 #    path: /swagger-ui.html
 #
 #storage:
-#  backend: postgres
+#  backend: h2
 #
 #resilience4j:
 #  circuitbreaker:
@@ -116,3 +116,4 @@ management:
 #    export:
 #      prometheus:
 #        enabled: true
+
