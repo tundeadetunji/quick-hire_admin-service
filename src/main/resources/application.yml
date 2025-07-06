@@ -1,3 +1,6 @@
+server:
+  port: ${PORT}
+
 spring:
   application:
     name: admin-service
@@ -54,6 +57,8 @@ management:
         enabled: true
 
 
+#server:
+#  port: 8080
 #
 #spring:
 #  application:
