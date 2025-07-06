@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class NotificationListener {
 
+    //this is only for local dev/testing
+
     /*@RabbitListener(queues = "#{adminQueue.name}")
     public void receive(String notificationMessage) {
         //in production, send to admin/stakeholders' email
