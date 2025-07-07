@@ -1,0 +1,31 @@
+# === Build output ===
+/target/
+**/target/
+
+# === Maven ===
+.mvn/
+!/.mvn/wrapper/maven-wrapper.jar
+!/.mvn/wrapper/maven-wrapper.properties
+mvnw
+mvnw.cmd
+
+# === IntelliJ IDEA ===
+.idea/
+*.iws
+*.iml
+*.ipr
+.out/
+
+# === VS Code ===
+.vscode/
+
+# === Logs ===
+*.log
+
+# === OS files ===
+.DS_Store
+Thumbs.db
+
+# === Render-specific ===
+.env
+*.env
