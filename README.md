@@ -1,25 +1,28 @@
 ![CI](https://github.com/tundeadetunji/quick-hire_admin-service/actions/workflows/ci.yml/badge.svg)
 
-## 📬 Messaging and Observability
+## 📬 Messaging
 ## 🧪 Testing
 ## ⚙️ Concurrency & Transactions
 ## 📘 Pagination
 
 
 
-## 📬 Messaging and Observability
+## 📬 Messaging
 
-This service **only listens to messages** on RabbitMQ and logs them in memory.
+This service **only listens to messages** via RabbitMQ and logs them in memory.
 
-- It listens to queues like `adminQueue` using `@RabbitListener`.
-- Received messages are stored in a temporary in-memory list.
+- It listens to `admin.notify` queue using `@RabbitListener`.
+- Received messages are stored in a temporary in-memory list for testing/demo visibility.
 
-You can view or clear the message log via:
+You can manage message logs via:
 
-- `GET /admin/messages` – list all received messages.
-- `DELETE /admin/messages` – clear the log (useful for testing).
+- `GET /admin/messages` – List all received messages
+- `DELETE /admin/messages` – Clear the in-memory log
 
-All messages from `recruiter-service` flow through here.
+Messages flow here from both:
+
+- `recruiter-service` (e.g., job created/updated)
+- `candidate-service` (indirectly via recruiter-service forwarding)
 
 ## 🧪 Testing
 
