@@ -1,7 +1,9 @@
 ![CI](https://github.com/tundeadetunji/quick-hire_admin-service/actions/workflows/ci.yml/badge.svg)
 
 # Admin Service of QuickHire+ microservices MVP
-View it <a href="https://quick-hire-admin-service.onrender.com/swagger-ui/index.html">Live</a>
+With QuickHire+, Recruiters can create jobs, manage job posts, candidate applications.
+<br />
+View the docs <a href="https://quick-hire-admin-service.onrender.com/swagger-ui/index.html">here</a>.
 
 <br />
 <br />
