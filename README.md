@@ -1,8 +1,4 @@
 ![CI](https://github.com/tundeadetunji/quick-hire_admin-service/actions/workflows/ci.yml/badge.svg)
-![Java](https://img.shields.io/badge/Java-17-blue?logo=java)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen?logo=spring-boot)
-![RabbitMQ](https://img.shields.io/badge/Messaging-RabbitMQ-orange?logo=rabbitmq)
-![CI](https://github.com/tundeadetunji/quick-hire_admin-service/actions/workflows/ci.yml/badge.svg)
 
 # 🛡️ Admin Service – QuickHire+ Microservices MVP  
 With QuickHire+, system-wide notifications are logged and viewed here for observability and demo purposes.
@@ -27,6 +23,17 @@ With QuickHire+, system-wide notifications are logged and viewed here for observ
                                        | - In-memory store      |
                                        +------------------------+
 ```
+
+---
+
+🧰 Tech Stack:
+- ☕ Java 17
+- 🌱 Spring Boot 3.x
+- 📬 RabbitMQ (Messaging)
+- 🛡️ Resilience4j (Observability)
+- 🧪 JUnit 5, 🎭 Mockito (Testing)
+- 🗄️ In-memory store (no persistent DB)
+- ⚙️ CI/CD via GitHub Actions
 
 ---
 
