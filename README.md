@@ -1,102 +1,63 @@
 ![CI](https://github.com/tundeadetunji/quick-hire_admin-service/actions/workflows/ci.yml/badge.svg)
+![Java](https://img.shields.io/badge/Java-17-blue?logo=java)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen?logo=spring-boot)
+![RabbitMQ](https://img.shields.io/badge/Messaging-RabbitMQ-orange?logo=rabbitmq)
+![CI](https://github.com/tundeadetunji/quick-hire_admin-service/actions/workflows/ci.yml/badge.svg)
 
-# Admin Service of QuickHire+ microservices MVP
-With QuickHire+, Recruiters can create jobs, manage job posts, candidate applications.
-<br />
-View the docs <a href="https://quick-hire-admin-service.onrender.com/swagger-ui/index.html">here</a>.
+# 🛡️ Admin Service – QuickHire+ Microservices MVP  
+With QuickHire+, system-wide notifications are logged and viewed here for observability and demo purposes.
 
-<br />
-<br />
+📄 API Docs: View <a href="https://quick-hire-admin-service.onrender.com/swagger-ui/index.html">Swagger UI</a>
 
-In this readme:
+---
 
-#### 📬 Messaging
-#### 🧪 Testing
-#### ⚙️ Concurrency & Transactions
-#### 📊 Resilience4j Observability
-#### 📘 Pagination
+📬 Messaging  
+This service **only listens** to RabbitMQ messages on the `admin.notify` queue.
 
-<br />
-<br />
-<br />
+- Logs received notifications in-memory  
+- Receives messages forwarded from `recruiter-service`, including those triggered by candidate actions
 
-## 📬 Messaging
+🔍 Endpoints:
+- `GET /admin/messages` – View messages  
+- `DELETE /admin/messages` – Clear all messages
 
-This service **only listens to messages** via RabbitMQ and logs them in memory.
+---
 
-- It listens to `admin.notify` queue using `@RabbitListener`.
-- Received messages are stored in a temporary in-memory list for testing/demo visibility.
+🧪 Testing  
+Uses JUnit 5 and Spring’s `@WebMvcTest`.  
+CI powered by GitHub Actions.
 
-You can manage message logs via:
+✅ What’s Covered
+- GET /admin/messages  
+- DELETE /admin/messages
 
-- `GET /admin/messages` – List all received messages
-- `DELETE /admin/messages` – Clear the in-memory log
+---
 
-Messages flow here from both:
+⚙️ Concurrency & Transactions  
+This service is passive:
+- No @Transactional methods  
+- No database persistence  
+- Uses a thread-safe in-memory store
 
-- `recruiter-service` (e.g., job created/updated)
-- `candidate-service` (indirectly via recruiter-service forwarding)
+---
 
-<br />
-<br />
-<br />
+📊 Resilience4j Observability  
+Supports:
 
-## 🧪 Testing
+✅ Circuit Breakers  
+🔁 Retry Policies  
+⏱️ Rate Limiting  
 
-The admin service is tested using **JUnit 5** and Spring’s `@WebMvcTest` for controller endpoints.
+Actuator endpoints (not exposed publicly):
+- /actuator/resilience4j.circuitbreakers  
+- /actuator/resilience4j.retries  
+- /actuator/resilience4j.ratelimiters
 
-CI runs via GitHub Actions on every push to `master`.
+🧪 To test locally:
+- Provide valid environment variables  
+- Or switch to H2 using `.env.local` / `application-local.yml`
 
-### ✅ What’s Covered
+---
 
-- Retrieving all messages (`GET /admin/messages`)
-- Clearing messages (`DELETE /admin/messages`)
-
-<br />
-<br />
-<br />
-
-## ⚙️ Concurrency & Transactions
-
-This service operates passively by listening to RabbitMQ and storing messages in memory. It **does not use `@Transactional` methods or database persistence**.
-
-Because it doesn’t modify shared data or persist state, concurrency is not a concern here. Messages are stored in a simple in-memory list and can be retrieved or cleared via REST endpoints.
-
-<br />
-<br />
-<br />
-
-## 📊 Resilience4j Observability
-
-This service uses **Resilience4j** to handle transient failures with:
-
-- Circuit Breakers
-- Retry Policies
-- Rate Limiting
-
-You can observe real-time Resilience4j metrics using the built-in Spring Boot Actuator endpoints:
-
-- `/actuator/resilience4j.circuitbreakers`
-- `/actuator/resilience4j.retries`
-- `/actuator/resilience4j.ratelimiters`
-
-> ⚠️ These endpoints are **internal** and not exposed publicly on Render.
-
-### 🧪 Local Testing
-
-If testing locally, ensure:
-
-- You provide valid environment variables **or**
-- You temporarily switch to an in-memory H2 database (e.g. via `application-local.yml` or `.env.local`)
-
-This allows the app to boot and actuator endpoints to respond.
-
-<br />
-<br />
-<br />
-
-## 📘 Pagination
-
-Pagination is not applicable in this service.
-
-Messages are stored in a temporary in-memory list (not persisted, for brevity sake in this mock), and the `/admin/messages` endpoint returns the full list.
+📘 Pagination  
+Not applicable — all messages are returned at once from memory.
