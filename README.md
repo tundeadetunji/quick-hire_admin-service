@@ -9,6 +9,25 @@ With QuickHire+, system-wide notifications are logged and viewed here for observ
 
 📄 API Docs: View <a href="https://quick-hire-admin-service.onrender.com/swagger-ui/index.html">Swagger UI</a>
 
+<br/>
+<br/>
+
+```  
++-------------------+       RabbitMQ        +-------------------+
+|  Candidate Service|  ───────────────▶     |  Recruiter Service|
+|                   |       🔔 Notify       |                   |
+| - Apply to jobs   |◀───────────────       | - Manage Jobs     |
++-------------------+                      ◀| - Notify Admin    |
+                                            +-------------------+
+                                                   │
+                                                   ▼
+                                       +------------------------+
+                                       |    Admin Service       |
+                                       | - Logs notifications   |
+                                       | - In-memory store      |
+                                       +------------------------+
+```
+
 ---
 
 📬 Messaging  
