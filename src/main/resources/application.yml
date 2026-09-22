@@ -6,14 +6,13 @@ spring:
     name: admin-service
 
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
-    driver-class-name: org.postgresql.Driver
-
+    url: jdbc:h2:mem:quickadmin
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
 
   sql:
@@ -32,7 +31,7 @@ springdoc:
     path: /swagger-ui.html
 
 storage:
-  backend: postgres
+  backend: h2
 
 resilience4j:
   circuitbreaker:
@@ -45,6 +44,19 @@ resilience4j:
         permittedNumberOfCallsInHalfOpenState: 2
         automaticTransitionFromOpenToHalfOpenEnabled: true
 
+  retry:
+    instances:
+      recruiterNotify:
+        maxAttempts: 3
+        waitDuration: 500ms
+
+  ratelimiter:
+    instances:
+      recruiterNotify:
+        limitForPeriod: 5
+        limitRefreshPeriod: 10s
+        timeoutDuration: 500ms
+
 mq:
   queue: admin.notifications
   exchange: app.exchange
@@ -54,71 +66,10 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,prometheus
+        include: health,info,prometheus,circuitbreakers,retries,ratelimiters
   metrics:
     export:
       prometheus:
         enabled: true
 
-
-#server:
-#  port: 8080
-#
-#spring:
-#  application:
-#    name: admin-service
-#
-#  datasource:
-#    url: jdbc:h2:mem:admin-db
-#    driver-class-name: org.h2.Driver
-#    username: sa
-#    password:
-#
-#  h2:
-#    console:
-#      enabled: true
-#
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#    show-sql: true
-#
-#  rabbitmq:
-#    host: localhost
-#    port: 5672
-#    username: guest
-#    password: guest
-#
-#springdoc:
-#  swagger-ui:
-#    path: /swagger-ui.html
-#
-#storage:
-#  backend: h2
-#
-#resilience4j:
-#  circuitbreaker:
-#    instances:
-#      recruiterService:
-#        slidingWindowSize: 5
-#        minimumNumberOfCalls: 3
-#        failureRateThreshold: 50
-#        waitDurationInOpenState: 10s
-#        permittedNumberOfCallsInHalfOpenState: 2
-#        automaticTransitionFromOpenToHalfOpenEnabled: true
-#
-#mq:
-#  queue: admin.notifications
-#  exchange: app.exchange
-#  routing-key: admin.notify
-#
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: health,info,prometheus
-#  metrics:
-#    export:
-#      prometheus:
-#        enabled: true
 
